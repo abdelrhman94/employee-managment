@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import { BiPlus } from 'react-icons/bi';
-
+import Success from './success';
+import Bug from './bug';
 // state => get previous state
 // event => have the current dispatch function value
 const formReducer = (state, event) => {
@@ -14,8 +15,15 @@ const Form = () => {
   const [formData, setFormData] = useReducer(formReducer, {});
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (Object.keys(formData).length === 0)
+      return console.log('There is no data to submit');
     console.log(formData);
   };
+
+  if (Object.keys(formData).length > 0)
+    return <Success message={'Data Added'} />;
+
+  if (Object.keys(formData).length > 0) return <Bug message={'Error'}></Bug>;
 
   return (
     <form className='grid lg:grid-cols-2 w-4/6 gap-4' onSubmit={handleSubmit}>
